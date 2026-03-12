@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .project-detail {
+            padding: 8rem 0 5rem;
+        }
+        .project-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .project-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .project-meta {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .project-video {
+            margin: 3rem 0;
+            text-align: center;
+        }
+        .project-video video {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        .project-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        .project-description {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+        .project-description h2 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        .project-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .sidebar-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+        .sidebar-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .tech-list span {
+            padding: 0.5rem 1rem;
+            background: var(--bg);
+            border-radius: 20px;
+            color: var(--primary);
+        }
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: var(--primary);
+        }
+        @media (max-width: 768px) {
+            .project-content {
+                grid-template-columns: 1fr;
+            }
+            .project-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Portfolio</a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+        </div>
+    </nav>
+
+    <section class="project-detail">
+        <div class="container">
+            <a href="index.html#projects" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+            
+            <div id="projectContent">
+                <div class="loading">Loading project details...</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Adeel Ur Rehman. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8003/api';
+        
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        
+        // Get project slug from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectSlug = urlParams.get('slug');
+        
+        async function loadProjectDetail() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/projects/${projectSlug}/`);
+                const project = await response.json();
+                
+                displayProject(project);
+            } catch (error) {
+                document.getElementById('projectContent').innerHTML = '<p>Error loading project details.</p>';
+            }
+        }
+        
+        function displayProject(project) {
+            const imageUrl = project.thumbnail.startsWith('http') 
+                ? project.thumbnail 
+                : `http://localhost:8003${project.thumbnail}`;
+            
+            let videoHTML = '';
+            if (project.video) {
+                const videoUrl = project.video.startsWith('http') 
+                    ? project.video 
+                    : `http://localhost:8003${project.video}`;
+                videoHTML = `
+                    <div class="project-video">
+                        <video controls>
+                            <source src="${videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                `;
+            }
+            
+            let galleryHTML = '';
+            if (project.images && project.images.length > 0) {
+                galleryHTML = `
+                    <div class="project-gallery">
+                        ${project.images.map(img => {
+                            const imgUrl = img.image.startsWith('http') 
+                                ? img.image 
+                                : `http://localhost:8003${img.image}`;
+                            return `
+                                <div class="gallery-item">
+                                    <img src="${imgUrl}" alt="${img.caption || project.title}">
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            }
+            
+            const content = `
+                <div class="project-header">
+                    <h1>${project.title}</h1>
+                    <p class="subtitle">${project.short_description}</p>
+                    <div class="project-links">
+                        ${project.github_link ? `<a href="${project.github_link}" target="_blank" class="btn btn-primary"><i class="fab fa-github"></i> View Code</a>` : ''}
+                        ${project.live_link ? `<a href="${project.live_link}" target="_blank" class="btn btn-secondary"><i class="fas fa-external-link-alt"></i> Live Demo</a>` : ''}
+                    </div>
+                </div>
+                
+                <img src="${imageUrl}" alt="${project.title}" style="width: 100%; border-radius: 15px; margin-bottom: 2rem;">
+                
+                ${videoHTML}
+                
+                <div class="project-content">
+                    <div class="project-description">
+                        <h2>About This Project</h2>
+                        <p>${project.full_description}</p>
+                        
+                        ${project.requirements ? `
+                            <h2 style="margin-top: 2rem;">Requirements & Features</h2>
+                            <p>${project.requirements}</p>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="project-sidebar">
+                        <div class="sidebar-card">
+                            <h3><i class="fas fa-code"></i> Technologies</h3>
+                            <div class="tech-list">
+                                ${project.technologies_list.map(tech => `<span>${tech}</span>`).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="sidebar-card">
+                            <h3><i class="fas fa-info-circle"></i> Project Info</h3>
+                            <p><strong>Category:</strong> ${project.category}</p>
+                            <p><strong>Date:</strong> ${new Date(project.created_at).toLocaleDateString()}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                ${galleryHTML}
+            `;
+            
+            document.getElementById('projectContent').innerHTML = content;
+        }
+        
+        loadProjectDetail();
+    </script>
+</body>
+</html>

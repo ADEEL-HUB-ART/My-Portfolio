@@ -1,0 +1,3 @@
+Replace this file with your actual profile image named "profile.jpg"
+Or use the upload button on the website to add your photo.
+The image will be saved in your browser's local storage.
