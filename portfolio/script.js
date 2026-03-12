@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'http://localhost:8002/api';
+const API_BASE_URL = 'https://energetic-eagerness-production-64dd.up.railway.app/api';
 console.log('Script loaded, API_BASE_URL:', API_BASE_URL);
 
 // Theme Toggle
@@ -221,7 +221,7 @@ function createProjectCard(project) {
     
     const imageUrl = project.thumbnail.startsWith('http') 
         ? project.thumbnail 
-        : `http://localhost:8002${project.thumbnail}`;
+        : `https://energetic-eagerness-production-64dd.up.railway.app${project.thumbnail}`;
     
     card.innerHTML = `
         <div class="project-image">
@@ -270,7 +270,7 @@ async function downloadCV() {
         if (data.file) {
             const cvUrl = data.file.startsWith('http') 
                 ? data.file 
-                : `http://localhost:8002${data.file}`;
+                : `https://energetic-eagerness-production-64dd.up.railway.app${data.file}`;
             window.open(cvUrl, '_blank');
         }
     } catch (error) {

@@ -126,6 +126,7 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 CORS_ALLOWED_ORIGINS = [
+    "https://portfolio-frontend-production-c8f5.up.railway.app",
     "http://localhost:8003",
     "http://127.0.0.1:8003",
     "http://localhost:9000",

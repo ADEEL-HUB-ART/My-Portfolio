@@ -158,7 +158,7 @@
     </footer>
 
     <script>
-        const API_BASE_URL = 'http://localhost:8002/api';
+        const API_BASE_URL = 'https://energetic-eagerness-production-64dd.up.railway.app/api';
         
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
@@ -194,13 +194,13 @@
         function displayProject(project) {
             const imageUrl = project.thumbnail.startsWith('http') 
                 ? project.thumbnail 
-                : `http://localhost:8002${project.thumbnail}`;
+                : `https://energetic-eagerness-production-64dd.up.railway.app${project.thumbnail}`;
             
             let videoHTML = '';
             if (project.video) {
                 const videoUrl = project.video.startsWith('http') 
                     ? project.video 
-                    : `http://localhost:8002${project.video}`;
+                    : `https://energetic-eagerness-production-64dd.up.railway.app${project.video}`;
                 videoHTML = `
                     <div class="project-video">
                         <video controls>
@@ -218,7 +218,7 @@
                         ${project.images.map(img => {
                             const imgUrl = img.image.startsWith('http') 
                                 ? img.image 
-                                : `http://localhost:8002${img.image}`;
+                                : `https://energetic-eagerness-production-64dd.up.railway.app${img.image}`;
                             return `
                                 <div class="gallery-item">
                                     <img src="${imgUrl}" alt="${img.caption || project.title}">
