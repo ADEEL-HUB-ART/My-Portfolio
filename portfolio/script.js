@@ -1,32 +1,10 @@
 // API Configuration
-const API_BASE_URL = 'https://energetic-eagerness-production-64dd.up.railway.app/api';
+const API_BASE_URL = 'http://localhost:8002/api';
 console.log('Script loaded, API_BASE_URL:', API_BASE_URL);
 
 // Theme Toggle
 const themeToggle = document.getElementById('themeToggle');
 const html = document.documentElement;
-
-// Profile Image Upload
-const imageUpload = document.getElementById('imageUpload');
-const profileImg = document.getElementById('profileImg');
-
-imageUpload.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            profileImg.src = event.target.result;
-            localStorage.setItem('profileImage', event.target.result);
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// Load saved profile image
-const savedImage = localStorage.getItem('profileImage');
-if (savedImage) {
-    profileImg.src = savedImage;
-}
 
 themeToggle.addEventListener('click', () => {
     const currentTheme = html.getAttribute('data-theme');
@@ -221,7 +199,7 @@ function createProjectCard(project) {
     
     const imageUrl = project.thumbnail.startsWith('http') 
         ? project.thumbnail 
-        : `https://energetic-eagerness-production-64dd.up.railway.app${project.thumbnail}`;
+        : `http://localhost:8002${project.thumbnail}`;
     
     card.innerHTML = `
         <div class="project-image">
@@ -260,6 +238,36 @@ filterButtons.forEach(button => {
 // Load projects on page load
 console.log('Page loaded, calling loadProjects...');
 loadProjects();
+loadProfile();
+
+// Load profile data
+async function loadProfile() {
+    console.log('Loading profile...');
+    try {
+        const response = await fetch(`${API_BASE_URL}/profile/`);
+        console.log('Profile response status:', response.status);
+        if (response.ok) {
+            const profile = await response.json();
+            console.log('Profile data:', profile);
+            
+            // Update profile image
+            const profileImg = document.getElementById('profileImg');
+            if (profile.profile_image) {
+                console.log('Setting profile image to:', profile.profile_image);
+                profileImg.src = profile.profile_image;
+            }
+            
+            // Update name and title
+            const nameElement = document.querySelector('.hero h1');
+            const titleElement = document.querySelector('.hero .subtitle');
+            if (nameElement) nameElement.textContent = profile.name;
+            if (titleElement) titleElement.textContent = profile.title;
+        }
+    } catch (error) {
+        console.error('Profile loading error:', error);
+        console.log('Using default profile data');
+    }
+}
 
 // Download CV Function
 async function downloadCV() {
@@ -270,7 +278,7 @@ async function downloadCV() {
         if (data.file) {
             const cvUrl = data.file.startsWith('http') 
                 ? data.file 
-                : `https://energetic-eagerness-production-64dd.up.railway.app${data.file}`;
+                : `http://localhost:8002${data.file}`;
             window.open(cvUrl, '_blank');
         }
     } catch (error) {

@@ -31,3 +31,17 @@
 127.0.0.1 - - [12/Mar/2026 13:47:54] "GET /project-detail.html?slug=vibetrack HTTP/1.1" 200 -
 127.0.0.1 - - [12/Mar/2026 13:47:55] "GET /style.css HTTP/1.1" 200 -
 127.0.0.1 - - [12/Mar/2026 13:48:08] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 14:25:52] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 14:25:52] "GET /script.js?v=999 HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 14:26:37] "GET /index.html HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 14:26:37] "GET /script.js?v=999 HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 14:27:13] "GET /index.html HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 14:27:13] "GET /script.js?v=999 HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 14:27:34] "GET /script.js HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 14:27:38] "GET /script.js HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 14:28:08] "GET /index.html HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 14:28:08] "GET /script.js?v=999 HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 14:28:26] "GET /index.html HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 14:28:26] "GET /script.js?v=999 HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 14:28:40] "GET /index.html HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 14:28:40] "GET /script.js?v=999 HTTP/1.1" 304 -

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, ProjectImage, CV, ContactMessage
+from .models import Project, ProjectImage, CV, ContactMessage, Profile
 
 class ProjectImageInline(admin.TabularInline):
     model = ProjectImage
@@ -50,3 +50,13 @@ class ContactMessageAdmin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
         return False
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ['name', 'title', 'is_active']
+    fields = ['name', 'title', 'profile_image', 'bio', 'is_active']
+    
+    def save_model(self, request, obj, form, change):
+        if obj.is_active:
+            Profile.objects.filter(is_active=True).update(is_active=False)
+        super().save_model(request, obj, form, change)

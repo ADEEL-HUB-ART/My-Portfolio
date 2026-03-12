@@ -9,4 +9,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('cv/', views.get_active_cv, name='active-cv'),
     path('contact/', views.contact_message, name='contact'),
+    path('profile/', views.get_active_profile, name='active-profile'),
 ]

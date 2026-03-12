@@ -132,33 +132,6 @@ html {
     background: var(--bg-secondary);
 }
 
-.upload-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(99, 102, 241, 0.9);
-    padding: 0.5rem;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.profile-image:hover .upload-overlay {
-    opacity: 1;
-}
-
-.upload-label {
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.upload-label i {
-    font-size: 1.2rem;
-}
-
 .hero h1 {
     font-size: 4rem;
     font-weight: 800;

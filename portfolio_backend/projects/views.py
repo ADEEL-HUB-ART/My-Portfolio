@@ -31,6 +31,20 @@ def get_active_cv(request):
         return Response(serializer.data)
     return Response({'error': 'No active CV found'}, status=404)
 
+@api_view(['GET'])
+def get_active_profile(request):
+    from .models import Profile
+    profile = Profile.objects.filter(is_active=True).first()
+    if profile:
+        data = {
+            'name': profile.name,
+            'title': profile.title,
+            'bio': profile.bio,
+            'profile_image': request.build_absolute_uri(profile.profile_image.url) if profile.profile_image else None
+        }
+        return Response(data)
+    return Response({'error': 'No active profile found'}, status=404)
+
 @api_view(['POST'])
 def contact_message(request):
     serializer = ContactMessageSerializer(data=request.data)

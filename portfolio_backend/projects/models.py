@@ -53,6 +53,20 @@ class CV(models.Model):
     def __str__(self):
         return f"CV - {self.uploaded_at.strftime('%Y-%m-%d')}"
 
+class Profile(models.Model):
+    name = models.CharField(max_length=200, default="Adeel Ur Rehman")
+    title = models.CharField(max_length=300, default="Backend Developer | Python Django Expert | API Specialist")
+    profile_image = models.ImageField(upload_to='profile/', blank=True, null=True)
+    bio = models.TextField(blank=True)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "Profile"
+        verbose_name_plural = "Profile"
+    
+    def __str__(self):
+        return self.name
+
 class ContactMessage(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField()
