@@ -1,5 +1,6 @@
 // API Configuration
-const API_BASE_URL = 'http://localhost:8003/api';
+const API_BASE_URL = 'http://localhost:8002/api';
+console.log('Script loaded, API_BASE_URL:', API_BASE_URL);
 
 // Theme Toggle
 const themeToggle = document.getElementById('themeToggle');
@@ -187,21 +188,27 @@ contactForm.addEventListener('submit', async (e) => {
 
 // Fetch and Display Projects
 async function loadProjects(category = 'all') {
+    console.log('Loading projects...', category);
     try {
         const url = category === 'all' 
             ? `${API_BASE_URL}/projects/`
             : `${API_BASE_URL}/projects/?category=${category}`;
         
+        console.log('Fetching from:', url);
         const response = await fetch(url);
+        console.log('Response status:', response.status);
         const projects = await response.json();
+        console.log('Projects received:', projects);
         
         const projectsGrid = document.querySelector('.projects-grid');
+        console.log('Projects grid element:', projectsGrid);
         projectsGrid.innerHTML = '';
         
         projects.forEach(project => {
             const projectCard = createProjectCard(project);
             projectsGrid.appendChild(projectCard);
         });
+        console.log('Projects loaded successfully');
     } catch (error) {
         console.error('Error loading projects:', error);
     }
@@ -214,7 +221,7 @@ function createProjectCard(project) {
     
     const imageUrl = project.thumbnail.startsWith('http') 
         ? project.thumbnail 
-        : `http://localhost:8003${project.thumbnail}`;
+        : `http://localhost:8002${project.thumbnail}`;
     
     card.innerHTML = `
         <div class="project-image">
@@ -251,6 +258,7 @@ filterButtons.forEach(button => {
 });
 
 // Load projects on page load
+console.log('Page loaded, calling loadProjects...');
 loadProjects();
 
 // Download CV Function
@@ -262,7 +270,7 @@ async function downloadCV() {
         if (data.file) {
             const cvUrl = data.file.startsWith('http') 
                 ? data.file 
-                : `http://localhost:8003${data.file}`;
+                : `http://localhost:8002${data.file}`;
             window.open(cvUrl, '_blank');
         }
     } catch (error) {

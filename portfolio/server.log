@@ -1,0 +1,33 @@
+127.0.0.1 - - [12/Mar/2026 13:28:51] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 13:28:56] "GET /script.js HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 13:29:22] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 13:29:22] code 404, message File not found
+127.0.0.1 - - [12/Mar/2026 13:29:22] "GET /profile.jpg HTTP/1.1" 404 -
+127.0.0.1 - - [12/Mar/2026 13:29:22] code 404, message File not found
+127.0.0.1 - - [12/Mar/2026 13:29:22] "GET /api/projects/ HTTP/1.1" 404 -
+127.0.0.1 - - [12/Mar/2026 13:29:34] code 404, message File not found
+127.0.0.1 - - [12/Mar/2026 13:29:34] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [12/Mar/2026 13:29:42] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 13:29:42] code 404, message File not found
+127.0.0.1 - - [12/Mar/2026 13:29:42] "GET /profile.jpg HTTP/1.1" 404 -
+127.0.0.1 - - [12/Mar/2026 13:29:43] code 404, message File not found
+127.0.0.1 - - [12/Mar/2026 13:29:43] "GET /api/projects/ HTTP/1.1" 404 -
+127.0.0.1 - - [12/Mar/2026 13:29:43] code 404, message File not found
+127.0.0.1 - - [12/Mar/2026 13:29:43] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [12/Mar/2026 13:31:41] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 13:31:42] code 404, message File not found
+127.0.0.1 - - [12/Mar/2026 13:31:42] "GET /profile.jpg HTTP/1.1" 404 -
+127.0.0.1 - - [12/Mar/2026 13:31:42] "GET /script.js?v=999 HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 13:31:42] code 404, message File not found
+127.0.0.1 - - [12/Mar/2026 13:31:42] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [12/Mar/2026 13:32:54] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 13:32:54] code 404, message File not found
+127.0.0.1 - - [12/Mar/2026 13:32:54] "GET /profile.jpg HTTP/1.1" 404 -
+127.0.0.1 - - [12/Mar/2026 13:32:54] code 404, message File not found
+127.0.0.1 - - [12/Mar/2026 13:32:54] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [12/Mar/2026 13:32:54] "GET /script.js?v=999 HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 13:47:48] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 13:47:48] "GET /script.js?v=999 HTTP/1.1" 304 -
+127.0.0.1 - - [12/Mar/2026 13:47:54] "GET /project-detail.html?slug=vibetrack HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 13:47:55] "GET /style.css HTTP/1.1" 200 -
+127.0.0.1 - - [12/Mar/2026 13:48:08] "GET /index.html HTTP/1.1" 200 -
