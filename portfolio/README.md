@@ -84,6 +84,25 @@ Replace the Download CV link with your actual CV file:
    - Vercel
    - AWS S3
 
+## Deployment Notes
+
+If your frontend and backend are hosted on different domains, set the API base before loading the page:
+
+```html
+<script>
+  window.PORTFOLIO_API_BASE_URL = 'https://your-backend-domain.com/api';
+</script>
+```
+
+For the Django backend, configure these environment variables in production:
+
+- `SECRET_KEY`
+- `DEBUG=False`
+- `ALLOWED_HOSTS`
+- `EMAIL_HOST_USER`
+- `EMAIL_HOST_PASSWORD`
+- `CORS_ALLOWED_ORIGINS`
+
 ## File Structure
 
 ```

@@ -3,180 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Details - Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Project Details — Adeel Ur Rehman</title>
+    <meta name="description" content="Detailed project overview by Adeel Ur Rehman — Backend Developer.">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        .project-detail {
-            padding: 8rem 0 5rem;
+        .project-detail { padding: 8rem 0 5rem; }
+        .breadcrumb {
+            display: flex; align-items: center; gap: 0.5rem;
+            margin-bottom: 2rem; font-size: 0.9rem; color: var(--text-secondary);
         }
-        .project-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
+        .breadcrumb a { color: var(--primary); text-decoration: none; transition: opacity 0.3s; }
+        .breadcrumb a:hover { opacity: 0.7; }
+        .breadcrumb i { font-size: 0.7rem; }
+        .project-header { text-align: center; margin-bottom: 3rem; }
         .project-header h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+            letter-spacing: -1px; margin-bottom: 1rem;
         }
         .project-meta {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-bottom: 2rem;
+            display: flex; gap: 2rem; justify-content: center;
+            margin-bottom: 2rem; flex-wrap: wrap;
         }
-        .project-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
+        .project-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .project-hero-img {
+            width: 100%; max-height: 500px; object-fit: contain;
+            border-radius: 20px; margin-bottom: 2rem;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px var(--shadow-lg);
+            background: var(--bg-secondary);
         }
-        .project-video {
-            margin: 3rem 0;
-            text-align: center;
-        }
+        .project-video { margin: 3rem 0; text-align: center; }
         .project-video video {
-            max-width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px var(--shadow);
+            max-width: 100%; border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-lg);
         }
         .project-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 3rem;
-            margin-top: 3rem;
+            display: grid; grid-template-columns: 2fr 1fr;
+            gap: 2rem; margin-top: 3rem;
         }
         .project-description {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 15px;
+            background: var(--glass-bg); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem; border-radius: 20px;
         }
         .project-description h2 {
-            margin-bottom: 1rem;
-            color: var(--primary);
+            margin-bottom: 1rem; color: var(--primary);
+            font-size: 1.3rem; font-weight: 700;
         }
-        .project-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
+        .project-description p { color: var(--text-secondary); line-height: 1.8; }
+        .project-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
         .sidebar-card {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 15px;
+            background: var(--glass-bg); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 2rem; border-radius: 20px; transition: all 0.3s ease;
+        }
+        .sidebar-card:hover {
+            border-color: rgba(var(--primary-rgb), 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px var(--shadow-lg);
         }
         .sidebar-card h3 {
-            margin-bottom: 1rem;
-            color: var(--primary);
+            margin-bottom: 1rem; color: var(--primary);
+            font-size: 1.1rem; font-weight: 700;
+            display: flex; align-items: center; gap: 0.5rem;
         }
-        .tech-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
+        .tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-list span {
-            padding: 0.5rem 1rem;
-            background: var(--bg);
-            border-radius: 20px;
-            color: var(--primary);
+            padding: 0.4rem 1rem; background: rgba(var(--primary-rgb), 0.08);
+            border: 1px solid rgba(var(--primary-rgb), 0.12);
+            border-radius: 50px; color: var(--primary);
+            font-size: 0.85rem; font-weight: 500;
         }
         .project-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem; margin-top: 3rem;
         }
         .gallery-item {
-            border-radius: 15px;
-            overflow: hidden;
+            border-radius: 16px; overflow: hidden;
+            border: 1px solid var(--glass-border);
             box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.4s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px var(--shadow-lg);
         }
         .gallery-item img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.3s;
+            width: 100%; height: 250px; object-fit: cover;
+            transition: transform 0.6s ease;
         }
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            color: var(--text);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .back-btn:hover {
-            color: var(--primary);
-        }
+        .gallery-item:hover img { transform: scale(1.05); }
         @media (max-width: 768px) {
-            .project-content {
-                grid-template-columns: 1fr;
-            }
-            .project-header h1 {
-                font-size: 2rem;
-            }
+            .project-content { grid-template-columns: 1fr; }
+            .project-header h1 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-ring"></div>
+            <div class="preloader-text">Loading</div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></button>
+
+    <nav class="navbar" id="navbar">
         <div class="container">
-            <a href="index.html" class="logo">Portfolio</a>
-            <ul class="nav-links">
+            <a href="index.html" class="logo">AR.</a>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="index.html#home">Home</a></li>
                 <li><a href="index.html#about">About</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#projects" class="active">Projects</a></li>
                 <li><a href="index.html#skills">Skills</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <button class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
     </nav>
 
     <section class="project-detail">
         <div class="container">
-            <a href="index.html#projects" class="back-btn">
-                <i class="fas fa-arrow-left"></i> Back to Projects
-            </a>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="index.html#projects">Projects</a>
+                <i class="fas fa-chevron-right"></i>
+                <span id="breadcrumbTitle">Loading...</span>
+            </div>
             
             <div id="projectContent">
-                <div class="loading">Loading project details...</div>
+                <div style="text-align: center; padding: 4rem 0;">
+                    <div class="preloader-ring" style="margin: 0 auto 1.5rem;"></div>
+                    <p style="color: var(--text-secondary);">Loading project details...</p>
+                </div>
             </div>
         </div>
     </section>
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 Adeel Ur Rehman. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Adeel Ur Rehman. Crafted with <i class="fas fa-heart" style="color: var(--accent);"></i></p>
+                <div class="footer-social">
+                    <a href="https://github.com/ADEEL-HUB-ART" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/adeel-rehman-08999b2b2/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
             </div>
         </div>
     </footer>
 
     <script>
-        const API_BASE_URL = 'https://energetic-eagerness-production-64dd.up.railway.app/api';
+        const configuredApiBase = window.PORTFOLIO_API_BASE_URL
+            || document.querySelector('meta[name="api-base-url"]')?.content
+            || '';
+        const apiCandidates = [
+            window.location.origin && window.location.protocol !== 'file:' ? `${window.location.origin.replace(/\/$/, '')}/api` : null,
+            configuredApiBase || null,
+            'http://localhost:8002/api',
+            'http://127.0.0.1:8002/api',
+            'http://localhost:8000/api',
+            'http://127.0.0.1:8000/api',
+        ].filter(Boolean);
+        let API_BASE_URL = configuredApiBase || '';
+
+        async function fetchWithTimeout(url, options = {}, timeoutMs = 2500) {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+                return await fetch(url, { ...options, signal: controller.signal });
+            } finally {
+                clearTimeout(timeout);
+            }
+        }
+
+        async function resolveApiBaseUrl() {
+            for (const candidate of [...new Set(apiCandidates)]) {
+                const normalized = candidate.replace(/\/$/, '');
+                try {
+                    const response = await fetchWithTimeout(`${normalized}/projects/?page=1`, { headers: { Accept: 'application/json' } }, 1800);
+                    const contentType = response.headers.get('content-type') || '';
+                    if (response.ok && contentType.includes('application/json')) {
+                        API_BASE_URL = normalized;
+                        return API_BASE_URL;
+                    }
+                } catch (error) {
+                    // Try next candidate
+                }
+            }
+            API_BASE_URL = (configuredApiBase || apiCandidates[0] || 'http://localhost:8002/api').replace(/\/$/, '');
+            return API_BASE_URL;
+        }
+
+        function resolveAssetUrl(assetUrl) {
+            if (!assetUrl) return assetUrl;
+            if (/^https?:\/\//i.test(assetUrl)) return assetUrl;
+
+            const base = API_BASE_URL || configuredApiBase || apiCandidates[0] || 'http://localhost:8002/api';
+            const normalizedBase = base.replace(/\/$/, '');
+            const assetBase = normalizedBase.endsWith('/api') ? normalizedBase.replace(/\/api$/, '') : normalizedBase;
+            return new URL(assetUrl, `${assetBase}/`).href;
+        }
+
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('preloader').classList.add('hidden'), 600);
+        });
+        
+        // Custom Cursor
+        const cursorDot = document.getElementById('cursorDot');
+        const cursorRing = document.getElementById('cursorRing');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            cursorDot.style.left = mouseX + 'px'; cursorDot.style.top = mouseY + 'px';
+            cursorDot.style.transform = 'translate(-50%, -50%)';
+        });
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15;
+            cursorRing.style.left = ringX + 'px'; cursorRing.style.top = ringY + 'px';
+            cursorRing.style.transform = 'translate(-50%, -50%)';
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
+        });
         
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
-        
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        html.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
         themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
             themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
             localStorage.setItem('theme', newTheme);
         });
         
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        html.setAttribute('data-theme', savedTheme);
-        themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        // Hamburger
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
         
-        // Get project slug from URL
+        // Scroll to top
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('visible', window.pageYOffset > 300);
+            document.getElementById('navbar').classList.toggle('scrolled', window.pageYOffset > 50);
+        });
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        
+        // Load project
         const urlParams = new URLSearchParams(window.location.search);
         const projectSlug = urlParams.get('slug');
         
@@ -184,28 +282,30 @@
             try {
                 const response = await fetch(`${API_BASE_URL}/projects/${projectSlug}/`);
                 const project = await response.json();
-                
+                document.getElementById('breadcrumbTitle').textContent = project.title;
                 displayProject(project);
             } catch (error) {
-                document.getElementById('projectContent').innerHTML = '<p>Error loading project details.</p>';
+                document.getElementById('projectContent').innerHTML = `
+                    <div style="text-align: center; padding: 4rem 0;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                        <h3>Error Loading Project</h3>
+                        <p style="color: var(--text-secondary); margin: 1rem 0 2rem;">The project could not be loaded. Please try again.</p>
+                        <a href="index.html#projects" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                    </div>
+                `;
             }
         }
         
         function displayProject(project) {
-            const imageUrl = project.thumbnail.startsWith('http') 
-                ? project.thumbnail 
-                : `https://energetic-eagerness-production-64dd.up.railway.app${project.thumbnail}`;
-            
+            const imageUrl = resolveAssetUrl(project.thumbnail);
+
             let videoHTML = '';
             if (project.video) {
-                const videoUrl = project.video.startsWith('http') 
-                    ? project.video 
-                    : `https://energetic-eagerness-production-64dd.up.railway.app${project.video}`;
+                const videoUrl = resolveAssetUrl(project.video);
                 videoHTML = `
                     <div class="project-video">
                         <video controls>
                             <source src="${videoUrl}" type="video/mp4">
-                            Your browser does not support the video tag.
                         </video>
                     </div>
                 `;
@@ -216,67 +316,50 @@
                 galleryHTML = `
                     <div class="project-gallery">
                         ${project.images.map(img => {
-                            const imgUrl = img.image.startsWith('http') 
-                                ? img.image 
-                                : `https://energetic-eagerness-production-64dd.up.railway.app${img.image}`;
-                            return `
-                                <div class="gallery-item">
-                                    <img src="${imgUrl}" alt="${img.caption || project.title}">
-                                </div>
-                            `;
+                            const imgUrl = resolveAssetUrl(img.image);
+                            return `<div class="gallery-item"><img src="${imgUrl}" alt="${img.caption || project.title}"></div>`;
                         }).join('')}
                     </div>
                 `;
             }
             
-            const content = `
+            document.getElementById('projectContent').innerHTML = `
                 <div class="project-header">
                     <h1>${project.title}</h1>
-                    <p class="subtitle">${project.short_description}</p>
+                    <p class="section-subtitle">${project.short_description}</p>
                     <div class="project-links">
                         ${project.github_link ? `<a href="${project.github_link}" target="_blank" class="btn btn-primary"><i class="fab fa-github"></i> View Code</a>` : ''}
                         ${project.live_link ? `<a href="${project.live_link}" target="_blank" class="btn btn-secondary"><i class="fas fa-external-link-alt"></i> Live Demo</a>` : ''}
                     </div>
                 </div>
-                
-                <img src="${imageUrl}" alt="${project.title}" style="width: 100%; border-radius: 15px; margin-bottom: 2rem;">
-                
+                <img src="${imageUrl}" alt="${project.title}" class="project-hero-img">
                 ${videoHTML}
-                
                 <div class="project-content">
                     <div class="project-description">
                         <h2>About This Project</h2>
                         <p>${project.full_description}</p>
-                        
-                        ${project.requirements ? `
-                            <h2 style="margin-top: 2rem;">Requirements & Features</h2>
-                            <p>${project.requirements}</p>
-                        ` : ''}
+                        ${project.requirements ? `<h2 style="margin-top: 2rem;">Requirements & Features</h2><p>${project.requirements}</p>` : ''}
                     </div>
-                    
                     <div class="project-sidebar">
                         <div class="sidebar-card">
                             <h3><i class="fas fa-code"></i> Technologies</h3>
-                            <div class="tech-list">
-                                ${project.technologies_list.map(tech => `<span>${tech}</span>`).join('')}
-                            </div>
+                            <div class="tech-list">${project.technologies_list.map(tech => `<span>${tech}</span>`).join('')}</div>
                         </div>
-                        
                         <div class="sidebar-card">
                             <h3><i class="fas fa-info-circle"></i> Project Info</h3>
-                            <p><strong>Category:</strong> ${project.category}</p>
+                            <p style="margin-bottom: 0.5rem;"><strong>Category:</strong> ${project.category}</p>
                             <p><strong>Date:</strong> ${new Date(project.created_at).toLocaleDateString()}</p>
                         </div>
                     </div>
                 </div>
-                
                 ${galleryHTML}
             `;
-            
-            document.getElementById('projectContent').innerHTML = content;
         }
         
-        loadProjectDetail();
+        (async () => {
+            await resolveApiBaseUrl();
+            loadProjectDetail();
+        })();
     </script>
 </body>
 </html>

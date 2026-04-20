@@ -11,21 +11,54 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+def load_env_file(file_path):
+    if not file_path.exists():
+        return
+
+    for raw_line in file_path.read_text().splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith('#') or '=' not in line:
+            continue
+
+        key, value = line.split('=', 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+
+        # Do not override variables explicitly provided by the process environment.
+        os.environ.setdefault(key, value)
+
+
+# Load local env files for development convenience.
+load_env_file(BASE_DIR / '.env')
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+def env_bool(name, default=False):
+    return os.getenv(name, str(default)).strip().lower() in {'1', 'true', 'yes', 'on'}
+
+
+def env_list(name, default=''):
+    return [item.strip() for item in os.getenv(name, default).split(',') if item.strip()]
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vvg##*=z(o$1m!wo#)g&93_l8_931tsj)myi_^s55h*w8p(3jp'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-change-me-for-local-dev')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env_bool('DEBUG', True)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if host.strip()]
+
+if DEBUG and 'testserver' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('testserver')
 
 
 # Application definition
@@ -119,19 +152,28 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 CORS_ALLOWED_ORIGINS = [
-    "https://portfolio-frontend-production-c8f5.up.railway.app",
-    "http://localhost:8003",
-    "http://127.0.0.1:8003",
-    "http://localhost:9000",
-    "http://127.0.0.1:9000",
+    origin.strip()
+    for origin in os.getenv(
+        'CORS_ALLOWED_ORIGINS',
+        'https://portfolio-frontend-production-c8f5.up.railway.app'
+    ).split(',')
+    if origin.strip()
 ]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^http://localhost(:\d+)?$',
+    r'^http://127\.0\.0\.1(:\d+)?$',
+]
+
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_METHODS = [
     'GET',
@@ -140,13 +182,14 @@ CORS_ALLOW_METHODS = [
 ]
 
 # Email Configuration - Real SMTP
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'rehmanadeel136@gmail.com'  # Your Gmail
-EMAIL_HOST_PASSWORD = 'vbbc dugj lgyf gjce'
-DEFAULT_FROM_EMAIL = 'rehmanadeel136@gmail.com'
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', True)
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '').strip()
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '').strip()
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'no-reply@example.com')
+CONTACT_RECIPIENTS = env_list('CONTACT_RECIPIENTS', EMAIL_HOST_USER)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

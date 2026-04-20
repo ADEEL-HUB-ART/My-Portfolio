@@ -1,11 +1,14 @@
-from rest_framework import viewsets, generics, status
+from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.conf import settings
-from .models import Project, CV, ContactMessage
+import logging
+from .models import Project, CV
 from .serializers import ProjectListSerializer, ProjectDetailSerializer, CVSerializer, ContactMessageSerializer
+
+
+logger = logging.getLogger(__name__)
 
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Project.objects.all()
@@ -50,15 +53,24 @@ def contact_message(request):
     serializer = ContactMessageSerializer(data=request.data)
     if serializer.is_valid():
         # Save to database
-        contact = serializer.save()
-        
-        # Send email in background (non-blocking)
-        from threading import Thread
-        def send_email():
-            try:
-                send_mail(
-                    subject=f"Portfolio Contact: {serializer.validated_data['subject']}",
-                    message=f"""
+        serializer.save()
+
+        email_queued = False
+        recipients = [email for email in getattr(settings, 'CONTACT_RECIPIENTS', []) if email]
+
+        # Send email in background only when SMTP credentials are configured.
+        if settings.EMAIL_HOST_USER and settings.EMAIL_HOST_PASSWORD and recipients:
+            from threading import Thread
+
+            def send_email():
+                try:
+                    email = EmailMessage(
+                        subject=(
+                            f"[Portfolio] New Message from "
+                            f"{serializer.validated_data['name']} "
+                            f"({serializer.validated_data['email']})"
+                        ),
+                        body=f"""
 New contact message from your portfolio:
 
 Name: {serializer.validated_data['name']}
@@ -67,18 +79,25 @@ Subject: {serializer.validated_data['subject']}
 
 Message:
 {serializer.validated_data['message']}
-                    """,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=['rehmanadeel136@gmail.com'],
-                    fail_silently=True,
-                )
-            except Exception as e:
-                print(f"Email error: {e}")
-        
-        Thread(target=send_email).start()
-        
+                        """,
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        to=recipients,
+                        reply_to=[serializer.validated_data['email']],
+                    )
+                    email.send(fail_silently=False)
+                except Exception as e:
+                    logger.exception("Contact email send failed: %s", e)
+
+            Thread(target=send_email, daemon=True).start()
+            email_queued = True
+        else:
+            logger.warning(
+                "Contact email skipped. Configure EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, and CONTACT_RECIPIENTS."
+            )
+
         return Response({
             'success': True,
+            'email_queued': email_queued,
             'message': 'Thank you for your message! I will get back to you soon.'
         }, status=status.HTTP_201_CREATED)
     

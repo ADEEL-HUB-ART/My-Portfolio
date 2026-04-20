@@ -3,85 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Portfolio</title>
-    <link rel="stylesheet" href="style.css?v=2">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Adeel Ur Rehman — Backend Developer & API Specialist</title>
+    <meta name="description" content="Professional portfolio of Adeel Ur Rehman — Backend Developer specializing in Python Django, FastAPI, Flask, and scalable API architecture.">
+    <meta name="keywords" content="Backend Developer, Python, Django, FastAPI, API Specialist, Portfolio">
+    <meta name="author" content="Adeel Ur Rehman">
+    <meta name="theme-color" content="#6366f1">
+    <meta property="og:title" content="Adeel Ur Rehman — Backend Developer Portfolio">
+    <meta property="og:description" content="Backend Developer specializing in Python Django, FastAPI, and scalable API architecture.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="style.css" id="mainStylesheet">
+    <script>
+        (function () {
+            var version = encodeURIComponent(document.lastModified || Date.now().toString());
+            var stylesheet = document.getElementById('mainStylesheet');
+            if (stylesheet) stylesheet.href = 'style.css?v=' + version;
+        })();
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar">
+    <noscript>
+        <style>
+            .noscript-notice {
+                margin: 1rem;
+                padding: 1rem 1.25rem;
+                border-radius: 12px;
+                border: 1px solid #f59e0b;
+                background: #fffbeb;
+                color: #92400e;
+                font-family: Inter, sans-serif;
+                line-height: 1.6;
+            }
+            .noscript-notice a {
+                color: #7c3aed;
+                font-weight: 600;
+            }
+        </style>
+        <div class="noscript-notice">
+            Interactive features are disabled because JavaScript is off. You can still contact me via
+            <a href="mailto:rehmanadeel136@gmail.com">email</a>,
+            <a href="https://github.com/ADEEL-HUB-ART" target="_blank" rel="noopener noreferrer">GitHub</a>,
+            and <a href="https://www.linkedin.com/in/adeel-rehman-08999b2b2/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
+        </div>
+    </noscript>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-ring"></div>
+            <div class="preloader-text">Loading</div>
+        </div>
+    </div>
+
+    <!-- Page Transition Overlay -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Scroll to Top — Progress Ring -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+        <svg viewBox="0 0 44 44">
+            <defs>
+                <linearGradient id="scrollGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="var(--primary)" />
+                    <stop offset="100%" stop-color="var(--accent)" />
+                </linearGradient>
+            </defs>
+            <circle class="progress-ring-bg" cx="22" cy="22" r="20" />
+            <circle class="progress-ring-fill" id="scrollRingFill" cx="22" cy="22" r="20" />
+        </svg>
+        <i class="fas fa-arrow-up scroll-top-icon"></i>
+    </button>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
         <div class="container">
-            <a href="#" class="logo">Portfolio</a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
+            <a href="#" class="logo">AR.</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
     </nav>
 
+    <!-- ===== HERO ===== -->
     <section id="home" class="hero">
+        <canvas id="particleCanvas"></canvas>
+        <div class="hero-gradient-orb orb1"></div>
+        <div class="hero-gradient-orb orb2"></div>
+        <div class="hero-gradient-orb orb3"></div>
         <div class="container">
-            <div class="hero-content">
-                <div class="profile-image">
-                    <img src="https://via.placeholder.com/200x200/6366f1/ffffff?text=AR" alt="Adeel Ur Rehman" id="profileImg">
+            <div class="hero-split">
+                <div class="hero-left">
+                    <div class="availability-badge">
+                        <span class="availability-dot"></span>
+                        Available for Work
+                    </div>
+                    <h1 class="hero-greeting text-reveal">Hello<span class="accent-dot">.</span></h1>
+                    <h2 class="hero-name">I'm <span class="gradient-text">Adeel Ur Rehman</span></h2>
+                    <div class="typing-wrapper">
+                        <span class="typing-text" id="typingText"></span><span class="typing-cursor"></span>
+                    </div>
+                    <div class="cta-buttons">
+                        <a href="#projects" class="btn btn-primary magnetic-btn"><i class="fas fa-briefcase"></i> View My Work</a>
+                        <a href="#" class="btn btn-secondary magnetic-btn" id="downloadCvBtn"><i class="fas fa-file-alt"></i> My Resume</a>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/ADEEL-HUB-ART" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/adeel-rehman-08999b2b2/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:rehmanadeel136@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                    <div class="hero-services">
+                        <div class="hero-service-item">
+                            <i class="fas fa-server"></i>
+                            <span>Backend Development</span>
+                        </div>
+                        <div class="hero-service-item">
+                            <i class="fas fa-plug"></i>
+                            <span>API Development</span>
+                        </div>
+                        <div class="hero-service-item">
+                            <i class="fas fa-database"></i>
+                            <span>Database Architecture</span>
+                        </div>
+                    </div>
                 </div>
-                <h1>Adeel Ur Rehman</h1>
-                <p class="subtitle">Backend Developer | Python Django Expert | API Specialist</p>
-                <div class="cta-buttons">
-                    <a href="#projects" class="btn btn-primary">View Work</a>
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                </div>
-                <div class="social-links">
-                    <a href="https://github.com/ADEEL-HUB-ART" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/adeel-rehman-08999b2b2/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <div class="hero-right">
+                    <div class="hero-image-wrapper">
+                        <div class="hero-image-glow"></div>
+                        <div class="hero-image-frame">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='600' viewBox='0 0 500 600'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='500' height='600' fill='url(%23g)'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' fill='white' font-family='Arial' font-size='96' font-weight='700'%3EAR%3C/text%3E%3C/svg%3E" alt="Adeel Ur Rehman" id="profileImg" class="parallax-img" loading="lazy" decoding="async">
+                        </div>
+                        <div class="hero-float-badge badge-1">
+                            <i class="fab fa-python"></i>
+                            <span>Python</span>
+                        </div>
+                        <div class="hero-float-badge badge-2">
+                            <i class="fas fa-code"></i>
+                            <span>Django</span>
+                        </div>
+                        <div class="hero-float-badge badge-3">
+                            <i class="fab fa-docker"></i>
+                            <span>Docker</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+            Scroll Down
+        </div>
     </section>
 
+    <!-- Wave Divider hero → about -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,0 C300,60 900,0 1200,60 L1200,60 L0,60 Z"></path>
+        </svg>
+    </div>
+
+    <!-- ===== ABOUT ===== -->
     <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>I'm a passionate Backend Developer with 2 years of professional experience specializing in Python frameworks. I build robust, scalable APIs and backend systems that power modern applications.</p>
-                    <p>My expertise includes Django REST Framework, FastAPI, Flask, and working with both SQL and NoSQL databases. I'm proficient in containerization with Docker and Podman, ensuring seamless deployment and scalability.</p>
-                    <a href="#" class="btn btn-outline">Download CV</a>
+            <div class="section-header reveal">
+                <span class="section-label">About Me</span>
+                <h2 class="section-title text-reveal">Turning Ideas Into Scalable Solutions</h2>
+            </div>
+            <div class="about-split">
+                <div class="about-text-col reveal">
+                    <p>I'm a dedicated <strong>Backend Developer</strong> currently working at <strong>Enigmatix</strong> with almost <strong>2 years</strong> of professional experience. I specialize in Python frameworks, building robust, scalable APIs and backend systems that power modern applications — handling millions of requests with efficiency and reliability.</p>
+                    <p>My expertise spans across <strong>Django REST Framework</strong>, <strong>FastAPI</strong>, <strong>Flask</strong>, and working with both SQL and NoSQL databases. I'm proficient in containerization with <strong>Docker</strong> and <strong>Podman</strong>, ensuring seamless deployment and infrastructure scalability.</p>
+                    <div class="about-stats-row">
+                        <div class="about-stat">
+                            <h3><span class="counter" data-target="15">0</span>+</h3>
+                            <p>Projects</p>
+                        </div>
+                        <div class="about-stat-divider"></div>
+                        <div class="about-stat">
+                            <h3><span class="counter" data-target="95">0</span>%</h3>
+                            <p>Satisfaction</p>
+                        </div>
+                        <div class="about-stat-divider"></div>
+                        <div class="about-stat">
+                            <h3><span class="counter" data-target="2">0</span>+</h3>
+                            <p>Experience</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="about-stats">
-                    <div class="stat-card">
-                        <h3>2+</h3>
-                        <p>Years Experience</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>15+</h3>
-                        <p>Projects Completed</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>10+</h3>
-                        <p>Happy Clients</p>
+                <div class="about-image-col reveal">
+                    <div class="about-image-wrapper">
+                        <div class="about-image-glow"></div>
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='450' height='500' viewBox='0 0 450 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='450' height='500' fill='url(%23g)'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' fill='white' font-family='Arial' font-size='84' font-weight='700'%3EAR%3C/text%3E%3C/svg%3E" alt="Adeel Ur Rehman" id="aboutImg" class="parallax-img" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="projects">
+    <!-- Wave Divider about → services -->
+    <div class="wave-divider flip">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,60 C300,0 900,60 1200,0 L1200,0 L0,0 Z"></path>
+        </svg>
+    </div>
+
+    <!-- ===== SERVICES ===== -->
+    <section id="services">
         <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="filter-buttons">
+            <div class="section-header reveal">
+                <span class="section-label">What I Do</span>
+                <h2 class="section-title">Services & Expertise</h2>
+                <p class="section-subtitle">Delivering end-to-end backend solutions with modern tools and best practices.</p>
+            </div>
+            <div class="services-grid stagger-children reveal">
+                <div class="service-card tilt-card">
+                    <div class="service-icon"><i class="fas fa-server"></i></div>
+                    <h3>Backend Development</h3>
+                    <p>Building robust, scalable server-side applications using Django, FastAPI, and Flask with clean, maintainable architecture.</p>
+                </div>
+                <div class="service-card tilt-card">
+                    <div class="service-icon"><i class="fas fa-plug"></i></div>
+                    <h3>RESTful API Design</h3>
+                    <p>Designing and implementing well-documented, versioned REST APIs with authentication, rate limiting, and comprehensive testing.</p>
+                </div>
+                <div class="service-card tilt-card">
+                    <div class="service-icon"><i class="fas fa-database"></i></div>
+                    <h3>Database Architecture</h3>
+                    <p>Designing optimized database schemas with PostgreSQL and MongoDB, including migrations, indexing, and query optimization.</p>
+                </div>
+                <div class="service-card tilt-card">
+                    <div class="service-icon"><i class="fab fa-docker"></i></div>
+                    <h3>DevOps & Deployment</h3>
+                    <p>Containerizing applications with Docker and Podman, CI/CD pipelines, server configuration, and cloud deployment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">My Work</span>
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">A showcase of real-world applications I've designed and built.</p>
+            </div>
+            <div class="filter-buttons reveal">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="web">Web Apps</button>
                 <button class="filter-btn" data-filter="mobile">Mobile</button>
                 <button class="filter-btn" data-filter="design">Design</button>
             </div>
             <div class="projects-grid">
-                <div class="project-card" data-category="web">
+                <div class="project-card reveal tilt-card" data-category="web">
                     <div class="project-image">
-                        <img src="https://via.placeholder.com/400x300/6366f1/ffffff?text=Doctor+Appointment+System" alt="Project 1">
+                        <span class="project-status live">● Live</span>
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' fill='white' font-family='Arial' font-size='22' font-weight='700'%3EDoctor Appointment%3C/text%3E%3C/svg%3E" alt="Doctor Appointment System" loading="lazy" decoding="async">
                         <div class="project-overlay">
                             <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
                             <a href="#" class="project-link"><i class="fab fa-github"></i></a>
@@ -97,9 +291,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="project-card" data-category="web">
+                <div class="project-card reveal tilt-card" data-category="web">
                     <div class="project-image">
-                        <img src="https://via.placeholder.com/400x300/8b5cf6/ffffff?text=REST+API" alt="Project 2">
+                        <span class="project-status completed">✓ Completed</span>
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%238b5cf6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' fill='white' font-family='Arial' font-size='24' font-weight='700'%3EE-Commerce API%3C/text%3E%3C/svg%3E" alt="E-Commerce REST API" loading="lazy" decoding="async">
                         <div class="project-overlay">
                             <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
                             <a href="#" class="project-link"><i class="fab fa-github"></i></a>
@@ -107,7 +302,7 @@
                     </div>
                     <div class="project-info">
                         <h3>E-Commerce REST API</h3>
-                        <p>Scalable backend API with authentication and payment processing</p>
+                        <p>Scalable backend API with authentication, cart management, and payment processing</p>
                         <div class="project-tags">
                             <span>FastAPI</span>
                             <span>MongoDB</span>
@@ -115,9 +310,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="project-card" data-category="web">
+                <div class="project-card reveal tilt-card" data-category="web">
                     <div class="project-image">
-                        <img src="https://via.placeholder.com/400x300/ec4899/ffffff?text=Task+Manager" alt="Project 3">
+                        <span class="project-status completed">✓ Completed</span>
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ec4899'/%3E%3Cstop offset='1' stop-color='%236366f1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' fill='white' font-family='Arial' font-size='24' font-weight='700'%3ETask Manager%3C/text%3E%3C/svg%3E" alt="Task Management API" loading="lazy" decoding="async">
                         <div class="project-overlay">
                             <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
                             <a href="#" class="project-link"><i class="fab fa-github"></i></a>
@@ -125,7 +321,7 @@
                     </div>
                     <div class="project-info">
                         <h3>Task Management API</h3>
-                        <p>RESTful API for project and task management with team collaboration</p>
+                        <p>RESTful API for project and task management with team collaboration features</p>
                         <div class="project-tags">
                             <span>Flask</span>
                             <span>PostgreSQL</span>
@@ -133,9 +329,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="project-card" data-category="web">
+                <div class="project-card reveal tilt-card" data-category="web">
                     <div class="project-image">
-                        <img src="https://via.placeholder.com/400x300/10b981/ffffff?text=Microservices" alt="Project 4">
+                        <span class="project-status live">● Live</span>
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2310b981'/%3E%3Cstop offset='1' stop-color='%236366f1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' fill='white' font-family='Arial' font-size='24' font-weight='700'%3EMicroservices%3C/text%3E%3C/svg%3E" alt="Microservices Architecture" loading="lazy" decoding="async">
                         <div class="project-overlay">
                             <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
                             <a href="#" class="project-link"><i class="fab fa-github"></i></a>
@@ -143,7 +340,7 @@
                     </div>
                     <div class="project-info">
                         <h3>Microservices Architecture</h3>
-                        <p>Containerized microservices with Docker and API Gateway</p>
+                        <p>Containerized microservices with Docker, API Gateway, and service mesh</p>
                         <div class="project-tags">
                             <span>Django</span>
                             <span>Docker</span>
@@ -155,23 +352,37 @@
         </div>
     </section>
 
+    <!-- ===== SKILLS ===== -->
     <section id="skills" class="skills">
         <div class="container">
-            <h2 class="section-title">Skills & Expertise</h2>
-            <div class="skills-grid">
+            <div class="section-header reveal">
+                <span class="section-label">My Skills</span>
+                <h2 class="section-title">Technologies I Work With</h2>
+                <p class="section-subtitle">A comprehensive toolkit for building production-ready systems.</p>
+            </div>
+            <div class="skills-grid stagger-children reveal">
                 <div class="skill-category">
                     <h3><i class="fas fa-server"></i> Backend Frameworks</h3>
                     <div class="skill-items">
                         <div class="skill-item">
-                            <span>Django / Django REST Framework</span>
+                            <div class="skill-item-header">
+                                <span>Django / DRF</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
                             <div class="skill-bar"><div class="skill-progress" data-progress="90"></div></div>
                         </div>
                         <div class="skill-item">
-                            <span>FastAPI</span>
+                            <div class="skill-item-header">
+                                <span>FastAPI</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
                             <div class="skill-bar"><div class="skill-progress" data-progress="85"></div></div>
                         </div>
                         <div class="skill-item">
-                            <span>Flask</span>
+                            <div class="skill-item-header">
+                                <span>Flask</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
                             <div class="skill-bar"><div class="skill-progress" data-progress="80"></div></div>
                         </div>
                     </div>
@@ -180,16 +391,25 @@
                     <h3><i class="fas fa-database"></i> Databases</h3>
                     <div class="skill-items">
                         <div class="skill-item">
-                            <span>PostgreSQL</span>
+                            <div class="skill-item-header">
+                                <span>PostgreSQL</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
                             <div class="skill-bar"><div class="skill-progress" data-progress="85"></div></div>
                         </div>
                         <div class="skill-item">
-                            <span>MongoDB</span>
+                            <div class="skill-item-header">
+                                <span>MongoDB</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
                             <div class="skill-bar"><div class="skill-progress" data-progress="80"></div></div>
                         </div>
                         <div class="skill-item">
-                            <span>SQL / Database Design</span>
-                            <div class="skill-bar"><div class="skill-progress" data-progress="85"></div></div>
+                            <div class="skill-item-header">
+                                <span>Redis</span>
+                                <span class="skill-percent">75%</span>
+                            </div>
+                            <div class="skill-bar"><div class="skill-progress" data-progress="75"></div></div>
                         </div>
                     </div>
                 </div>
@@ -197,33 +417,51 @@
                     <h3><i class="fas fa-tools"></i> DevOps & Tools</h3>
                     <div class="skill-items">
                         <div class="skill-item">
-                            <span>Docker</span>
+                            <div class="skill-item-header">
+                                <span>Docker / Podman</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
                             <div class="skill-bar"><div class="skill-progress" data-progress="85"></div></div>
                         </div>
                         <div class="skill-item">
-                            <span>Podman</span>
-                            <div class="skill-bar"><div class="skill-progress" data-progress="75"></div></div>
+                            <div class="skill-item-header">
+                                <span>Git / GitHub</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="skill-bar"><div class="skill-progress" data-progress="90"></div></div>
                         </div>
                         <div class="skill-item">
-                            <span>Git / GitHub</span>
-                            <div class="skill-bar"><div class="skill-progress" data-progress="90"></div></div>
+                            <div class="skill-item-header">
+                                <span>CI/CD Pipelines</span>
+                                <span class="skill-percent">70%</span>
+                            </div>
+                            <div class="skill-bar"><div class="skill-progress" data-progress="70"></div></div>
                         </div>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3><i class="fas fa-code"></i> Frontend</h3>
+                    <h3><i class="fas fa-code"></i> Languages & Frontend</h3>
                     <div class="skill-items">
                         <div class="skill-item">
-                            <span>HTML5</span>
-                            <div class="skill-bar"><div class="skill-progress" data-progress="85"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <span>CSS3</span>
-                            <div class="skill-bar"><div class="skill-progress" data-progress="80"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <span>Python</span>
+                            <div class="skill-item-header">
+                                <span>Python</span>
+                                <span class="skill-percent">95%</span>
+                            </div>
                             <div class="skill-bar"><div class="skill-progress" data-progress="95"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-header">
+                                <span>JavaScript</span>
+                                <span class="skill-percent">75%</span>
+                            </div>
+                            <div class="skill-bar"><div class="skill-progress" data-progress="75"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-header">
+                                <span>HTML / CSS</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="skill-bar"><div class="skill-progress" data-progress="85"></div></div>
                         </div>
                     </div>
                 </div>
@@ -231,13 +469,170 @@
         </div>
     </section>
 
-    <section id="contact" class="contact">
+    <!-- ===== TECH STACK ORBIT ===== -->
+    <section id="techOrbit">
         <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
+            <div class="section-header reveal">
+                <span class="section-label">Tech Stack</span>
+                <h2 class="section-title">Technologies I Work With</h2>
+                <p class="section-subtitle">My core toolkit for building production-grade systems.</p>
+            </div>
+            <div class="tech-orbit reveal" id="techOrbitContainer">
+                <div class="orbit-ring ring-1"></div>
+                <div class="orbit-ring ring-2"></div>
+                <div class="orbit-ring ring-3"></div>
+                <div class="orbit-center">STACK</div>
+                <!-- Tech icons positioned via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GITHUB ACTIVITY ===== -->
+    <section id="github">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label"><i class="fab fa-github"></i> Open Source</span>
+                <h2 class="section-title">GitHub Activity</h2>
+                <p class="section-subtitle">My open source contributions and development activity.</p>
+            </div>
+            <div class="github-stats reveal stagger-children" id="githubStats">
+                <div class="github-stat-card">
+                    <i class="fas fa-code-branch"></i>
+                    <h3 id="ghRepos">—</h3>
+                    <p>Public Repos</p>
+                </div>
+                <div class="github-stat-card">
+                    <i class="fas fa-star"></i>
+                    <h3 id="ghStars">—</h3>
+                    <p>Total Stars</p>
+                </div>
+                <div class="github-stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3 id="ghFollowers">—</h3>
+                    <p>Followers</p>
+                </div>
+                <div class="github-stat-card">
+                    <i class="fas fa-fire"></i>
+                    <h3 id="ghContribs">—</h3>
+                    <p>Contributions</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="https://github.com/ADEEL-HUB-ART" target="_blank" class="btn btn-outline magnetic-btn"><i class="fab fa-github"></i> View GitHub Profile</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EXPERIENCE TIMELINE ===== -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">My Journey</span>
+                <h2 class="section-title">Experience & Education</h2>
+                <p class="section-subtitle">Key milestones in my professional path.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-card">
+                        <span class="timeline-date">2024 — Present</span>
+                        <h3>Backend Developer</h3>
+                        <h4>Enigmatix</h4>
+                        <p>Currently working as a Backend Developer with almost 2 years of experience. Building scalable REST APIs, microservices, and production-grade backend systems using Django REST, FastAPI, and Docker containerization.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-card">
+                        <span class="timeline-date">2023 — 2024</span>
+                        <h3>Junior Backend Developer</h3>
+                        <h4>Enigmatix — Early Career</h4>
+                        <p>Started my professional journey developing full-stack web applications, RESTful APIs with authentication, and database-driven platforms using Django and PostgreSQL.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-card">
+                        <span class="timeline-date">2022 — 2023</span>
+                        <h3>Self-Taught Developer</h3>
+                        <h4>Online Courses & Projects</h4>
+                        <p>Mastered Python, web development fundamentals, database design, and version control through intensive self-study and project-based learning.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-card">
+                        <span class="timeline-date">2025 — 2028</span>
+                        <h3>BS Software Engineering</h3>
+                        <h4>The Islamia University of Bahawalpur (IUB)</h4>
+                        <p>Pursuing a Bachelor's degree in Software Engineering with focus on algorithms, data structures, software architecture, and database management systems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Testimonials</span>
+                <h2 class="section-title">What Clients Say</h2>
+                <p class="section-subtitle">Feedback from people I've worked with.</p>
+            </div>
+            <div class="testimonials-slider reveal">
+                <div class="testimonials-track" id="testimonialsTrack">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">Adeel delivered an exceptional REST API for our e-commerce platform. His code was clean, well-documented, and the API performance exceeded our expectations. Highly recommended!</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">AK</div>
+                            <h4>Ahmed Khan</h4>
+                            <span>CEO, TechStart Solutions</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">Working with Adeel was a great experience. He understood the project requirements quickly and built a robust backend system with Django that scaled perfectly for our user base.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">SF</div>
+                            <h4>Sarah Farooq</h4>
+                            <span>Product Manager, DigiFlow</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="testimonial-text">Adeel's expertise in Docker and microservices architecture helped us modernize our legacy system. He's a problem-solver who communicates well and delivers on time.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">MR</div>
+                            <h4>Muhammad Raza</h4>
+                            <span>CTO, CloudBridge Inc.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-dots" id="testimonialDots">
+                    <button class="testimonial-dot active" data-index="0"></button>
+                    <button class="testimonial-dot" data-index="1"></button>
+                    <button class="testimonial-dot" data-index="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Get In Touch</span>
+                <h2 class="section-title">Let's Work Together</h2>
+                <p class="section-subtitle">Have a project idea or need backend expertise? I'd love to hear from you.</p>
+            </div>
             <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Let's work together</h3>
-                    <p>I'm always open to discussing new projects, backend development opportunities, or API integration challenges.</p>
+                <div class="contact-info reveal">
+                    <h3>Let's build something <span class="gradient-text">amazing</span></h3>
+                    <p>I'm always open to discussing new projects, backend development opportunities, or API integration challenges. Drop me a message and I'll get back to you within 24 hours.</p>
                     <div class="contact-details">
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
@@ -253,7 +648,7 @@
                         </div>
                     </div>
                 </div>
-                <form class="contact-form" id="contactForm">
+                <form class="contact-form reveal" id="contactForm">
                     <div class="form-group">
                         <input type="text" name="name" placeholder="Your Name" required>
                     </div>
@@ -266,23 +661,75 @@
                     <div class="form-group">
                         <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message</button>
                 </form>
             </div>
         </div>
     </section>
 
+    <!-- ===== CTA BANNER ===== -->
+    <section class="cta-banner">
+        <div class="container">
+            <h2>Ready to bring your idea to life?</h2>
+            <p>Let's collaborate and build something extraordinary together.</p>
+            <a href="#contact" class="btn magnetic-btn"><i class="fas fa-rocket"></i> Start a Project</a>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 Adeel Ur Rehman. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="https://github.com/ADEEL-HUB-ART" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="#" class="logo">AR.</a>
+                    <p>Backend Developer passionate about building scalable APIs and robust server-side architectures. Turning complex problems into elegant solutions.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About Me</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">API Development</a></li>
+                        <li><a href="#services">Backend Architecture</a></li>
+                        <li><a href="#services">Database Design</a></li>
+                        <li><a href="#services">DevOps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:rehmanadeel136@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
+                        <li><a href="https://github.com/ADEEL-HUB-ART" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="https://www.linkedin.com/in/adeel-rehman-08999b2b2/" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Adeel Ur Rehman. Crafted with <i class="fas fa-heart" style="color: var(--accent);"></i></p>
+                <div class="footer-social">
+                    <a href="https://github.com/ADEEL-HUB-ART" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/adeel-rehman-08999b2b2/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="mailto:rehmanadeel136@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <script src="script.js?v=999"></script>
+    <script>
+        (function () {
+            var version = encodeURIComponent(document.lastModified || Date.now().toString());
+            var script = document.createElement('script');
+            script.src = 'script.js?v=' + version;
+            script.defer = true;
+            document.body.appendChild(script);
+        })();
+    </script>
 </body>
 </html>
