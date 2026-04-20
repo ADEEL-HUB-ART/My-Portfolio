@@ -17,7 +17,7 @@ class Project(models.Model):
     requirements = models.TextField(blank=True)
     github_link = models.URLField(blank=True)
     live_link = models.URLField(blank=True)
-    thumbnail = models.ImageField(upload_to='projects/thumbnails/')
+    thumbnail = models.ImageField(upload_to='projects/thumbnails/', blank=True, null=True)
     video = models.FileField(upload_to='projects/videos/', blank=True, null=True)
     order = models.IntegerField(default=0)
     is_featured = models.BooleanField(default=False)

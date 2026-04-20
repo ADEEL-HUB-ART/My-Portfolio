@@ -74,3 +74,18 @@ class PortfolioApiTests(TestCase):
 		)
 		self.assertEqual(response.status_code, 201)
 		self.assertEqual(response.json()['success'], True)
+
+	def test_project_can_be_created_without_media_and_github_link(self):
+		project = Project.objects.create(
+			title='No Media Project',
+			slug='no-media-project',
+			category='web',
+			short_description='Short description only.',
+			full_description='Long description without thumbnail/video/github.',
+			technologies='Django, DRF',
+			requirements='Python 3.12',
+		)
+		self.assertFalse(project.thumbnail)
+		self.assertFalse(project.video)
+		self.assertEqual(project.github_link, '')
+
