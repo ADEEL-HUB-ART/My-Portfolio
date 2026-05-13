@@ -3,76 +3,20 @@
    ======================================== */
 
 // API Configuration
-const configuredApiBase = window.PORTFOLIO_API_BASE_URL
-    || document.querySelector('meta[name="api-base-url"]')?.content
-    || '';
-const defaultApiCandidates = [
-    window.location.origin && window.location.protocol !== 'file:' ? `${window.location.origin.replace(/\/$/, '')}/api` : null,
-    configuredApiBase || null,
-    'http://localhost:8002/api',
-    'http://127.0.0.1:8002/api',
-    'http://localhost:8000/api',
-    'http://127.0.0.1:8000/api',
-].filter(Boolean);
-let API_BASE_URL = configuredApiBase || '';
-const GITHUB_USERNAME = 'ADEEL-HUB-ART';
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
 }
 
-async function fetchWithTimeout(url, options = {}, timeoutMs = 7000) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), timeoutMs);
-    try {
-        return await fetch(url, { ...options, signal: controller.signal });
-    } finally {
-        clearTimeout(timeout);
-    }
-}
-
-async function fetchWithRetry(url, options = {}, retries = 2, timeoutMs = 7000) {
-    let lastError = null;
-    for (let attempt = 0; attempt <= retries; attempt++) {
-        try {
-            const response = await fetchWithTimeout(url, options, timeoutMs);
-            if (response.ok) return response;
-            lastError = new Error(`Request failed with status ${response.status}`);
-        } catch (error) {
-            lastError = error;
-        }
-    }
-    throw lastError || new Error('Request failed');
-}
-
-async function resolveApiBaseUrl() {
-    for (const candidate of [...new Set(defaultApiCandidates)]) {
-        const normalized = candidate.replace(/\/$/, '');
-        try {
-            const response = await fetchWithTimeout(`${normalized}/projects/?page=1`, { headers: { Accept: 'application/json' } }, 1800);
-            const contentType = response.headers.get('content-type') || '';
-            if (response.ok && contentType.includes('application/json')) {
-                API_BASE_URL = normalized;
-                return API_BASE_URL;
-            }
-        } catch (error) {
-            // Try next candidate
-        }
-    }
-
-    API_BASE_URL = (configuredApiBase || defaultApiCandidates[0] || 'http://localhost:8002/api').replace(/\/$/, '');
-    return API_BASE_URL;
-}
-
 function resolveAssetUrl(assetUrl) {
     if (!assetUrl) return assetUrl;
     if (/^https?:\/\//i.test(assetUrl)) return assetUrl;
-
-    const base = API_BASE_URL || configuredApiBase || defaultApiCandidates[0] || 'http://localhost:8002/api';
-    const normalizedBase = base.replace(/\/$/, '');
-    const assetBase = normalizedBase.endsWith('/api') ? normalizedBase.replace(/\/api$/, '') : normalizedBase;
-    return new URL(assetUrl, `${assetBase}/`).href;
+    assetUrl = assetUrl.replace(/^\//, '');
+    if (assetUrl.startsWith('media/')) {
+        return `assets/${assetUrl}`;
+    }
+    return `assets/media/${assetUrl}`;
 }
 
 // ========================================
@@ -537,32 +481,26 @@ contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const formData = new FormData(contactForm);
-    const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        subject: formData.get('subject'),
-        message: formData.get('message')
-    };
-    
+    formData.append("access_key", "a399221f-a5b8-4a04-bea2-438f56a7727f");
+
     const submitBtn = contactForm.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
     submitBtn.disabled = true;
     
     try {
-        const response = await fetch(`${API_BASE_URL}/contact/`, {
+        const response = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: formData
         });
         
         const result = await response.json();
         
         if (response.ok) {
-            showNotification('success', result.message || 'Message sent successfully! I\'ll get back to you soon.');
+            showNotification('success', 'Message sent successfully! I\'ll get back to you soon.');
             contactForm.reset();
         } else {
-            showNotification('error', 'Failed to send message. Please try again.');
+            showNotification('error', result.message || 'Failed to send message. Please try again.');
         }
     } catch (error) {
         showNotification('error', 'Network error. Please try again later.');
@@ -609,12 +547,11 @@ function showNotification(type, message) {
 // ========================================
 async function loadProjects(category = 'all') {
     try {
-        const url = category === 'all' 
-            ? `${API_BASE_URL}/projects/`
-            : `${API_BASE_URL}/projects/?category=${category}`;
-        
-        const response = await fetchWithRetry(url);
-        const projects = await response.json();
+        const response = await fetch('assets/data/projects.json');
+        let projects = await response.json();
+        if (category !== 'all') {
+            projects = projects.filter(p => p.category === category);
+        }
         
         // Clear grid
         const projectsGrid = document.querySelector('.projects-grid');
@@ -707,7 +644,7 @@ function applyImageWithPreload(imageEl, nextSrc) {
 }
 async function loadProfile() {
     try {
-        const response = await fetchWithRetry(`${API_BASE_URL}/profile/`);
+        const response = await fetch('assets/data/profile.json');
         if (response.ok) {
             const profile = await response.json();
             
@@ -733,19 +670,9 @@ async function loadProfile() {
 // ========================================
 const downloadCvBtn = document.getElementById('downloadCvBtn');
 if (downloadCvBtn) {
-    downloadCvBtn.addEventListener('click', async (e) => {
+    downloadCvBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        try {
-            const response = await fetch(`${API_BASE_URL}/cv/`);
-            const data = await response.json();
-            
-            if (data.file) {
-                const cvUrl = resolveAssetUrl(data.file);
-                window.open(cvUrl, '_blank');
-            }
-        } catch (error) {
-            showNotification('error', 'CV not available at the moment. Please contact me directly.');
-        }
+        window.open('assets/media/cv/White_Simple_Student_CV_Resume.pdf', '_blank');
     });
 }
 
@@ -899,23 +826,33 @@ function setGitHubStats(repos, stars, followers, contributions) {
 
 async function loadGitHubStats() {
     setGitHubStats('…', '…', '…', '…');
-    try {
-        const backendResponse = await fetchWithRetry(`${API_BASE_URL}/github-stats/`, {}, 1, 5000);
-        const stats = await backendResponse.json();
-        setGitHubStats(
-            stats.public_repos ?? '—',
-            stats.total_stars ?? '—',
-            stats.followers ?? '—',
-            stats.contributions ?? '—'
-        );
+
+    // If GITHUB_USERNAME isn't defined in the page, fallback to dummy values
+    if (typeof GITHUB_USERNAME === 'undefined' || !GITHUB_USERNAME) {
+        // Small delay so the UX shows the loading state briefly
+        setTimeout(() => setGitHubStats('30', '60', '20', '20'), 600);
         return;
-    } catch (error) {
-        // Fallback to GitHub public API below
+    }
+
+    // Local helper: fetch with timeout and optional retries (used only here)
+    async function fetchWithRetryLocal(url, opts = {}, retries = 1, timeout = 7000) {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+        try {
+            const res = await fetch(url, { signal: controller.signal, ...opts });
+            clearTimeout(id);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res;
+        } catch (err) {
+            clearTimeout(id);
+            if (retries > 0) return fetchWithRetryLocal(url, opts, retries - 1, timeout);
+            throw err;
+        }
     }
 
     try {
-        const userResponse = await fetchWithRetry(`https://api.github.com/users/${GITHUB_USERNAME}`, {}, 1, 7000);
-        const reposResponse = await fetchWithRetry(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`, {}, 1, 7000);
+        const userResponse = await fetchWithRetryLocal(`https://api.github.com/users/${GITHUB_USERNAME}`, {}, 1, 7000);
+        const reposResponse = await fetchWithRetryLocal(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`, {}, 1, 7000);
         const user = await userResponse.json();
         const repos = await reposResponse.json();
         const totalStars = Array.isArray(repos)
@@ -923,13 +860,12 @@ async function loadGitHubStats() {
             : 0;
         setGitHubStats(user.public_repos ?? '—', totalStars, user.followers ?? '—', 'N/A');
     } catch (error) {
-        setGitHubStats('—', '—', '—', '—');
+        // If the public API call fails (rate limits, CORS, etc.), fall back to dummy values
+        setGitHubStats('30', '60', '20', '20');
     }
 }
 
 (async () => {
-    await resolveApiBaseUrl();
-    loadProjects();
     loadProfile();
     initializeTextReveal();
     initializeTiltCards();

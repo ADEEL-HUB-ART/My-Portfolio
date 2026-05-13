@@ -82,7 +82,10 @@
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
-            <a href="#" class="logo">AR.</a>
+            <a href="#" class="logo" aria-label="Adeel home">
+                <span class="logo-mark">A</span>
+                <span class="logo-text">Adeel</span>
+            </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -578,39 +581,39 @@
             </div>
             <div class="testimonials-slider reveal">
                 <div class="testimonials-track" id="testimonialsTrack">
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">Adeel delivered an exceptional REST API for our e-commerce platform. His code was clean, well-documented, and the API performance exceeded our expectations. Highly recommended!</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">AK</div>
-                            <h4>Ahmed Khan</h4>
-                            <span>CEO, TechStart Solutions</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">Working with Adeel was a great experience. He understood the project requirements quickly and built a robust backend system with Django that scaled perfectly for our user base.</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">SF</div>
-                            <h4>Sarah Farooq</h4>
-                            <span>Product Manager, DigiFlow</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <p class="testimonial-text">Adeel's expertise in Docker and microservices architecture helped us modernize our legacy system. He's a problem-solver who communicates well and delivers on time.</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">MR</div>
-                            <h4>Muhammad Raza</h4>
-                            <span>CTO, CloudBridge Inc.</span>
-                        </div>
-                    </div>
+                            <div class="testimonial-card">
+                                <div class="testimonial-stars" aria-hidden="true">
+                                    <i class="fas fa-ellipsis-h" style="font-size:1.2rem;color:var(--text-secondary)"></i>
+                                </div>
+                                <p class="testimonial-text">Coming soon — client testimonials will be added here. Stay tuned for real feedback and case studies.</p>
+                                <div class="testimonial-author">
+                                    <div class="testimonial-avatar">CS</div>
+                                    <h4>Coming Soon</h4>
+                                    <span>Testimonials will appear here</span>
+                                </div>
+                            </div>
+                            <div class="testimonial-card">
+                                <div class="testimonial-stars" aria-hidden="true">
+                                    <i class="fas fa-ellipsis-h" style="font-size:1.2rem;color:var(--text-secondary)"></i>
+                                </div>
+                                <p class="testimonial-text">Coming soon — client testimonials will be added here. Stay tuned for real feedback and case studies.</p>
+                                <div class="testimonial-author">
+                                    <div class="testimonial-avatar">CS</div>
+                                    <h4>Coming Soon</h4>
+                                    <span>Testimonials will appear here</span>
+                                </div>
+                            </div>
+                            <div class="testimonial-card">
+                                <div class="testimonial-stars" aria-hidden="true">
+                                    <i class="fas fa-ellipsis-h" style="font-size:1.2rem;color:var(--text-secondary)"></i>
+                                </div>
+                                <p class="testimonial-text">Coming soon — client testimonials will be added here. Stay tuned for real feedback and case studies.</p>
+                                <div class="testimonial-author">
+                                    <div class="testimonial-avatar">CS</div>
+                                    <h4>Coming Soon</h4>
+                                    <span>Testimonials will appear here</span>
+                                </div>
+                            </div>
                 </div>
                 <div class="testimonial-dots" id="testimonialDots">
                     <button class="testimonial-dot active" data-index="0"></button>
@@ -681,7 +684,10 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-about">
-                    <a href="#" class="logo">AR.</a>
+                    <a href="#" class="logo" aria-label="Adeel home">
+                        <span class="logo-mark">A</span>
+                        <span class="logo-text">Adeel</span>
+                    </a>
                     <p>Backend Developer passionate about building scalable APIs and robust server-side architectures. Turning complex problems into elegant solutions.</p>
                 </div>
                 <div class="footer-col">
@@ -722,6 +728,8 @@
         </div>
     </footer>
 
+    <!-- Optional: define GitHub username used by script.js; change if you want real data -->
+    <script>window.GITHUB_USERNAME = 'ADEEL-HUB-ART';</script>
     <script>
         (function () {
             var version = encodeURIComponent(document.lastModified || Date.now().toString());
