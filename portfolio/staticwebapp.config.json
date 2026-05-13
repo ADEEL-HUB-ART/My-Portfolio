@@ -1,0 +1,26 @@
+{
+  "routes": [
+    {
+      "route": "/*",
+      "rewrite": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/assets/*",
+      "rewrite": "/assets/*"
+    },
+    {
+      "route": "*.json",
+      "rewrite": "*.json"
+    },
+    {
+      "route": "*.css",
+      "rewrite": "*.css"
+    },
+    {
+      "route": "*.js",
+      "rewrite": "*.js"
+    }
+  ]
+}
+
