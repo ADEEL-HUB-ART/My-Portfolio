@@ -1,24 +1,24 @@
 {
   "routes": [
     {
-      "route": "/*",
-      "rewrite": "/index.html"
-    },
-    {
       "route": "/assets/*",
-      "rewrite": "/assets/*"
+      "serve": "/assets/*"
     },
     {
       "route": "/*.json",
-      "rewrite": "/*.json"
+      "serve": "/*.json"
     },
     {
       "route": "/*.css",
-      "rewrite": "/*.css"
+      "serve": "/*.css"
     },
     {
       "route": "/*.js",
-      "rewrite": "/*.js"
+      "serve": "/*.js"
+    },
+    {
+      "route": "/*",
+      "rewrite": "/index.html"
     }
   ]
 }
